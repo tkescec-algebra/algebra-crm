@@ -1,0 +1,19 @@
+{
+    "name": "tkescec/algebra-crm",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tomislav Kešcec",
+            "email": "tkescec@algebra.hr"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    }
+}
