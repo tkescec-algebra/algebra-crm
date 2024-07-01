@@ -1,11 +1,10 @@
 <?php
 
-use App\Services\Router;
+use App\Controllers\HomeController;
+use App\Facades\Route;
 
-$router = Router::getInstance();
-$router->get('/', 'App\Controllers\HomeController', 'index');
-$router->get('/contacts', 'App\Controllers\ContactController', 'index');
-$router->post('/contacts/create', 'App\Controllers\ContactController', 'create');
+Route::get('/', HomeController::class, 'index');
+Route::get('/contacts', HomeController::class, 'contacts');
+Route::post('/contacts/create', 'App\Controllers\ContactController', 'create');
 
-echo '<pre>';
-var_dump($router);
+Route::dispatch();
