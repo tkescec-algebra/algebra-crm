@@ -8,9 +8,4 @@ class HomeController extends Controller
     {
         $this->render('home', ['title' => 'Home Page']);
     }
-
-    public function contacts()
-    {
-        $this->render('contacts', ['title' => 'Contacts Page']);
-    }
 }

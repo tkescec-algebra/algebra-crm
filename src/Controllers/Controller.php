@@ -14,4 +14,21 @@ abstract class Controller
             echo "View not found.";
         }
     }
+
+    protected function getRequestData(?array $fields = null): array
+    {
+        $data = [];
+
+        if ($fields) {
+            foreach ($fields as $field) {
+                $data[$field] = filter_input(INPUT_POST, $field, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        } else {
+            foreach ($_POST as $key => $value) {
+                $data[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+
+        return $data;
+    }
 }
