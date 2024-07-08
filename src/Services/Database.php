@@ -29,7 +29,8 @@ class Database
         try{
             $this->conn = new PDO($dsn, DB_USER, DB_PASS, $options);
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            // Zapiši iznimku u log datoteku
+            throw $e;
         }
     }
  

@@ -31,4 +31,10 @@ abstract class Controller
 
         return $data;
     }
+
+    protected function redirect(string $path): void
+    {
+        header("Location: " . APP_URL . "{$path}");
+        exit;
+    }
 }
