@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Middleware\Auth;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -15,11 +16,13 @@ class AuthController extends Controller
 
     public function showRegister()
     {
+        Auth::isAuthenticated();
         $this->render('auth/register', ['title' => 'Register']);
     }
 
     public function register(): mixed
     {
+        Auth::isAuthenticated();
         try {
             $data = $this->getRequestData();   
             $this->userModel->create($data);
@@ -35,11 +38,13 @@ class AuthController extends Controller
 
     public function showLogin()
     {
+        Auth::isAuthenticated();
         $this->render('auth/login', ['title' => 'Login']);
     }
 
     public function login(): mixed
     {
+        Auth::isAuthenticated();
         try {
             [$email, $password] = array_values(
                 $this->getRequestData(['email', 'password'])
@@ -58,5 +63,12 @@ class AuthController extends Controller
         }
 
         return $this->redirect('/admin/dashboard');
+    }
+
+    public function logout()
+    {
+        Auth::isGuest();
+        session_destroy();
+        return $this->redirect('/login');
     }
 }
