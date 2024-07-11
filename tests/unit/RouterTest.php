@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\HttpNotFoundException;
 use App\Services\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -7,9 +8,6 @@ class RouterTest extends TestCase
 {
     protected function setUp(): void
     {
-        define('APP_ROOT_URL', 'http://localhost:8081');
-        define('APP_PATH', '/Algebra/OL-OBE_DEV_H-0224/NapredniPHP/AlgebraCRM');
-        define('APP_URL', APP_ROOT_URL . APP_PATH); 
         $_SERVER['REQUEST_METHOD'] = '';
         $_SERVER['REQUEST_URI'] = '';
     }
@@ -31,6 +29,19 @@ class RouterTest extends TestCase
         $router->get('/test', TestController::class, 'testAction');
         
         $this->expectOutputString('Test Action');
+        $router->dispatch();
+    }
+
+    public function testDispatchFail()
+    {
+        $this->expectException(HttpNotFoundException::class);
+
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_URI'] = APP_PATH . '/nonexist';
+
+        $router = Router::getInstance();
+        $router->get('/test1', TestController::class, 'testAction');
+        
         $router->dispatch();
     }
 }
